@@ -33,6 +33,10 @@ class ModelListView(generics.ListCreateAPIView):
             'studentsubject': StudentSubjectSerializer,
         }
         return model_map.get(model_name)
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({"results": serializer.data})
 
 class ModelDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
@@ -47,6 +51,7 @@ class ModelDetailView(generics.RetrieveUpdateDestroyAPIView):
             'studentsubject': StudentSubject,
         }
         model = model_map.get(model_name)
+        
         return model.objects.all()
 
     def get_serializer_class(self):
