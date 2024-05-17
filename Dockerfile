@@ -9,9 +9,11 @@ RUN apt-get update && apt-get install -y python3.11
 RUN ln -s /usr/bin/python3.11 /usr/bin/python
 RUN python -m pip install --upgrade pip
 
-RUN pip install pipenv && pipenv install --dev --system --deploy && pipenv install python-dotenv
-
+RUN pip install pipenv && pipenv install
 COPY . .
 
-CMD ["pipenv", "run", "python", "app.py"]
+# Удаление миграций из Dockerfile, так как они будут выполнены в контейнере
+# RUN pipenv run python backend/manage.py makemigrations
+# RUN pipenv run python backend/manage.py migrate
 
+CMD ["pipenv", "run", "python", "backend/manage.py", "runserver", "0.0.0.0:5000"]

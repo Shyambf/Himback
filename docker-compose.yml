@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   app:
     build: .
     ports:
@@ -9,20 +22,12 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    volumes:
-      - .:/app
     env_file:
       - .env
     depends_on:
-    - db
-
-  db:
-    image: postgres
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    volumes:
-      - ./db/init.sql:/dumps/init.sql
-      - ./db/add_data.sql:/dumps/add_data.sql
-      - ./db.sh:/script/db.sh
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "pipenv run python backend/manage.py makemigrations &&
+             pipenv run python backend/manage.py migrate &&
+             pipenv run python backend/manage.py runserver 0.0.0.0:5000"
