@@ -28,6 +28,6 @@ services:
       db:
         condition: service_healthy
     command: >
-      sh -c "pipenv run python backend/manage.py makemigrations &&
-             pipenv run python backend/manage.py migrate &&
-             pipenv run python backend/manage.py runserver 0.0.0.0:5000"
+      sh -c "pipenv run python src/manage.py makemigrations &&
+             pipenv run python src/manage.py migrate &&
+             pipenv run python src/manage.py runserver 0.0.0.0:5000"
