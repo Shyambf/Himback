@@ -96,7 +96,7 @@ DJANGO_SETTINGS_MODULE='backend.settings'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-
+APPEND_SLASH = True
 
 DATABASES = {
 

@@ -13,8 +13,8 @@ class Teacher(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)
-    grade = models.IntegerField(blank=True, null=True)
-    date_of_grade = models.BooleanField()
+    grade = models.IntegerField(blank=True)
+    date_of_grade = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -27,7 +27,6 @@ class TeacherSubject(models.Model):
         return f'{self.teacher} - {self.subject}'
 
 class Class(models.Model):
-    id = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
