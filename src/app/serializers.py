@@ -19,7 +19,7 @@ class TeacherSubjectSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = TeacherSubject
-        fields = ['teacher_name', 'teacher_surname', 'teacher_patronymic', 'teacher', 'subject_name', 'subject']
+        fields = ['id', 'teacher_name', 'teacher_surname', 'teacher_patronymic', 'teacher', 'subject_name', 'subject']
 
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,7 +34,7 @@ class TeacherClassSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TeacherClass
-        fields = ['teacher_name', 'teacher_surname', 'teacher_patronymic', 'teacher', 'class_name', 'class_id']
+        fields = ['id', 'teacher_name', 'teacher_surname', 'teacher_patronymic', 'teacher', 'class_name', 'class_id']
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,4 +49,4 @@ class StudentSubjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudentSubject
-        fields = ['student_name', 'student_surname', 'student_patronymic', 'student', 'subject_name', 'subject']
+        fields = ['id', 'student_name', 'student_surname', 'student_patronymic', 'student', 'subject_name', 'subject']
